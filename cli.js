@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-var stdin = process.openStdin(), sys = require('sys'), cli;
+var sys = require('sys'), cli;
 
 utils = {
   slice: function (arr, start, opt_end) {
@@ -13,7 +13,7 @@ utils = {
 }
 
 cli = {
-  prompt: 'noding! ~ ',
+  prompt:    'noding! ~ ',
   msgHeader: 'node ... ',
   
   inspect: function(thingy) {
@@ -25,7 +25,6 @@ cli = {
       return this.msgHeader;
     }
     var text = [];
-    text.push('\n')
     text.push(this.msgHeader);
     text.push(utils.slice(arguments, 0));
     text.push('\n');
@@ -33,20 +32,31 @@ cli = {
   },
   
   run: function() {
+    var stdin = process.openStdin();
+    var newLineOnExit = true;
+    
     stdin.setEncoding('utf8');
     process.stdout.write('noding ... loading ...\n');
     process.stdout.write(cli.prompt);
     
     stdin.addListener('data', function (chunk) {
-      if (chunk == 'quit') {
-        stdin.end();
+      if (chunk === 'quit\n') {
+        newLineOnExit = false;
+        process.exit();
       }
       process.stdout.write(chunk);
       process.stdout.write(cli.prompt);
     });
 
     stdin.addListener('end', function () {
-      process.stdout.write(cli.info('end'));
+      process.exit();
+    });
+    
+    process.addListener('exit', function () {
+      var msg = cli.info('end');
+      if (newLineOnExit) 
+        msg = '\n' + msg;
+      process.stdout.write(msg);
     });
   }
   
