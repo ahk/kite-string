@@ -1,0 +1,6 @@
+Development status: don't use this yet!
+Requirements: 
+  - node.js, DNode (node.js lib)
+  - websockets set up in your targeted web browser and application code
+  
+Why shouldn't web browser sessions be able to hang out with the outside world?
