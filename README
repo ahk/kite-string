@@ -1,6 +1,9 @@
 Development status: don't use this yet!
+  For now the only client being developed is command line, but that's really not the final word on computer interfaces is it?
+  
 Requirements: 
   - node.js, DNode (node.js lib)
   - websockets set up in your targeted web browser and application code
   
-Why shouldn't web browser sessions be able to hang out with the outside world?
+Reason:
+  Why shouldn't web browser sessions be able to hang out with the outside world? Web apps are inherently networked, there should be simple interfaces for talking to them live.
